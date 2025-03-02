@@ -1,3 +1,9 @@
+
+#Draw.io temp file
+/.$diagrams_scms.drawio.dtmp
+
+# ------GITHUB recommended ignored files for python project
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
