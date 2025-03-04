@@ -1,5 +1,5 @@
-from scms import Grade
 from scms.course import Course
+from scms.grade import Grade
 from scms.user import User, UserType
 
 class Student(User):

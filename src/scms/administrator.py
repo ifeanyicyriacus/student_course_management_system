@@ -1,4 +1,5 @@
-from scms.manager import UserManager, CourseManager
+from scms.user_manager import UserManager
+from scms.course_manager import CourseManager
 from scms.user import User, UserType
 
 

@@ -1,13 +1,5 @@
-from abc import ABC, abstractmethod
-from enum import Enum
-
-
-class UserType(Enum):
-    INSTRUCTOR = "INSTRUCTOR"
-    STUDENT = "STUDENT"
-    ADMINISTRATOR = "ADMINISTRATOR"
-
-
+from abc import ABC
+from scms.user_type import UserType
 class User(ABC):
     def __init__(self, user_id:str, full_name:str, email:str, password:str, user_type:UserType):
         self.user_id = user_id
@@ -16,11 +8,11 @@ class User(ABC):
         self.password = password
         self.user_type = user_type
 
-        def login(self, email:str, password:str):
-            pass
+    def login(self, email:str, password:str):
+        pass
 
-        def logout(self):
-            pass
+    def logout(self):
+        pass
 
-        def reset_password(self):
-            print("Password reset logic here")
+    def reset_password(self):
+        print("Password reset logic here")
