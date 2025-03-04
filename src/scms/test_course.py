@@ -9,15 +9,12 @@ class Student:
 
 class TestCourse(TestCase):
     def setUp(self):
-        self.instructor = Instructor('001', 'John Doe', 'Computer Science', 123)
-        self.course = Course('1234', 'Computer Science', 'introduction to computer science', self.instructor)
+        self.instructor = Instructor('001', 'John Doe', 'johndoe@example.com', 'password123')
+        self.course = Course('1234', 'Computer Science', 'Introduction to Computer Science', self.instructor)
         self.student = Student('123', 'Jane Smith')
 
     def test_enroll_student(self):
         self.course.enroll_student(self.student)
-        self.assertEqual(self.student, self.course.students)
-        self.assertEqual(self.student.user_id, self.course.grades)
-        self.assertEqual(self.course.grades[self.student.user_id])
-
-
-
+        self.assertIn(self.student, self.course.students)
+        self.assertIn(self.student.user_id, self.course.grades)
+        self.assertEqual(self.course.grades[self.student.user_id], None)
