@@ -16,11 +16,9 @@ class User(ABC):
         self.password = password
         self.user_type = user_type
 
-        @abstractmethod
         def login(self, email:str, password:str):
             pass
 
-        @abstractmethod
         def logout(self):
             pass
 

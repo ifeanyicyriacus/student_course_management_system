@@ -6,14 +6,6 @@ class CourseManager(ABC):
         pass
 
     @abstractmethod
-    def assign_grade(self, student, course, grade_value: str):
-        pass
-
-    @abstractmethod
-    def view_enrolled_students(self, course) -> list:
-        pass
-    
-    @abstractmethod
     def delete_course(self, course_id:str):
         pass
 
