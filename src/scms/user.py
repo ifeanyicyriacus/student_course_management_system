@@ -41,9 +41,9 @@ class User(ABC):
     def user_type(self, user_type:UserType):
         self.__user_type = user_type
 
-    def change_password(self, old_password:str, new_password:str):
-        if self._authenticate_password(old_password): self._password = new_password
+    def change_password(self, old_password:str, new_password:str) -> None:
+        if self.authenticate_password(old_password): self._password = new_password
         else: raise ValueError("Wrong password, try again")
 
-    def _authenticate_password(self, password) -> bool:
+    def authenticate_password(self, password) -> bool:
         return self._password == password

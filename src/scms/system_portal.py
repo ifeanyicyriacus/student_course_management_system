@@ -13,6 +13,8 @@ class SystemPortal:
         self.__courses: list = []
         administrator:Administrator = Administrator(str(0), "Portal Administrator", "admin@admin.com", "admin-password")
         self.__users.append(administrator)
+    #     self.load_data()
+    #     self = self
 
     @property
     def users(self):
@@ -50,6 +52,7 @@ class SystemPortal:
                 raise ValueError("User doesn't exist")
 
     def logout(self):
+        # download object state
         pass
 
     def __find_user_by_email(self, email:str):

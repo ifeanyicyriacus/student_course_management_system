@@ -11,9 +11,19 @@ class Course:
         self.instructor_assigned = instructor_assigned
         self.enrollments:list = []
 
+    @property
+    def course_id(self):
+        return self.__course_id
+    @course_id.setter
+    def course_id(self, value):
+        self.__course_id = value
 
-        def add_student(self, student):
-            pass
+    @property
+    def course_name(self):
+        return self.__course_id
 
-        def remove_student(self, student):
+    def add_student(self, student):
+        pass
+
+    def remove_student(self, student):
             pass
