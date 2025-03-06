@@ -1,7 +1,7 @@
 import re
 import sys
-from SCMS.student import Student
-from SCMS.facilitator import Facilitator
+from scms.student import Student
+from scms.instructor import Instructor
 
 
 class Portal:
@@ -27,29 +27,33 @@ class Portal:
             What's your full name?: 
             """).strip()
             password = input("Please enter your password: ").strip()
-            confirm_password = input("Please enter your password again: ").strip()
+            confirm_password = input("Confirm password: ").strip()
             if password != confirm_password:
                 input_password_again = input("""
                 Passwords don't match.
                 Please enter your password again: 
                 """)
             else:
-                role = input("Please enter your role(student/facilitator): ").strip().lower()
-                available_roles = ["student", "facilitator"]
+                role = input("""
+                Are you a:
+                1. Student
+                2. Instructor
+                """).strip().lower()
+                available_roles = ["student", "instructor"]
                 if role not in available_roles:
                     return ("""
-                    Please enter a valid role. You must enter student or facilitator.
+                    Please enter a valid role. You must enter student(1) or instructor(2).
                     Try again.
                     """)
                 if role == "student".lower():
                     new_buddy = Student(email, name, password, role)
-                elif role == "facilitator".lower():
-                    new_buddy = Facilitator(email, name, password, role)
+                elif role == "instructor".lower():
+                    new_buddy = Instructor(email, name, password, role)
                 else:
                     print("Invalid role.")
                 self.users.append(new_buddy)
                 new_buddy = {"email": email, "password": password, "role": role, "name": name}
-                print(f"\nYay! You've successfully registered, {name}! 🎉 You're all set up to explore!")
+                print(f"\nYay! You've successfully registered, {name}! 🎉 Now you can login!")
             return new_buddy
 
 
@@ -80,11 +84,11 @@ class MainMenu:
     def __init__(self):
         self.portal = Portal()
         self.current_user = None
+        self.users = []
 
 
 
-
-    def main_menu(self):
+    def main_menu(self, role):
         # users = []
 
         while True:
@@ -101,12 +105,12 @@ class MainMenu:
                 if user_input == '1':
                     new_buddy = self.portal.register()
                 elif user_input == '2':
-                    self.current_user = self.portal.login()
+                    self.current_user = self.portal.login(self.users)
                     # self.portal.add_user(new_buddy)
-                    if new_buddy['role'] == 'student':
-                        self.student_dashboard(self)
-                    elif new_buddy['role'] == 'facilitator':
-                        self.facilitator_dashboard(self)
+                    if role == 1:
+                        self.student_dashboard()
+                    elif role == 2:
+                        self.instructor_dashboard(self)
                 elif user_input == '3':
                     print("Goodbye friend!")
                 else:
@@ -124,7 +128,7 @@ class MainMenu:
             1.Enroll in a course
             2.View your courses
             3.View grades
-            4.View your facilitator
+            4.View your instructor
             5.Manage your account
             6.Logout
             """)
@@ -135,7 +139,7 @@ class MainMenu:
             elif reply == '3':
                 self.student.view_grades(self)
             elif reply == '4':
-                self.student.view_facilitator(self)
+                self.student.view_instructor(self)
             elif reply == '5':
                 self.student.manage_account(self)
             elif reply == '6':
@@ -143,10 +147,10 @@ class MainMenu:
             else:
                 return "Invalid input. Try again."
 
-    def facilitator_dashboard(self, self1):
+    def instructor_dashboard(self, self1):
         while True:
             self.print_line()
-            print("Welcome to Facilitator Dashboard".center(150))
+            print("Welcome to Instructor Dashboard".center(150))
             self.print_line()
             decision = input("""
             Choose one of the options:
@@ -157,13 +161,13 @@ class MainMenu:
             5. Logout
             """)
             if decision == '1':
-                self.facilitator.create_course(self)
+                self.instructor.create_course(self)
             elif decision == '2':
-                self.facilitator.assign_grades(self)
+                self.instructor.assign_grades(self)
             elif decision == '3':
-                self.facilitator.edit_grades(self)
+                self.instructor.edit_grades(self)
             elif decision == '4':
-                self.facilitator.view_enrolled_students(self)
+                self.instructor.view_enrolled_students(self)
             elif decision == '5':
                 self.current_user = None
                 sys.exit()
@@ -175,12 +179,19 @@ class MainMenu:
     def print_line(self):
         print("====================================================================================================================================================")
 
-    def is_valid_email(email):
-        valid_email = re.match(r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2}$', email)
-            if email is not valid_email:
-                return False
-            return True
+    # def is_valid_email(email):
+    #     valid_email = re.match(r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2}$', email)
+    #         if email is not valid_email:
+    #             return False
+    #         return True
 
 
-MainMenu().main_menu()
+MainMenu().main_menu(2)
+
+
+
+
+
+
+
 
