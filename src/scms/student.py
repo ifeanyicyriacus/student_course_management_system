@@ -24,3 +24,9 @@ class Student(User):
 
         pass
 
+    @property
+    def enrolled_courses(self):
+        return self.__enrolled_course
+    @enrolled_courses.setter
+    def enrolled_courses(self, course) -> None:
+        self.__enrolled_course = course
