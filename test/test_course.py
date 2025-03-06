@@ -1,6 +1,6 @@
 from unittest import TestCase
 from scms.instructor import Instructor
-from course import Course
+from scms.course import Course
 from scms.student import Student
 
 
