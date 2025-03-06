@@ -1,4 +1,5 @@
 from scms.enrollment import Enrollment
+
 # from scms.instructor import Instructor
 # from scms.student import Student
 
