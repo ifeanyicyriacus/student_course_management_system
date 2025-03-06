@@ -1,9 +1,8 @@
-from scms import Grade
-from scms.course import Course
+
 from scms.user import User, UserType
 
 class Student(User):
-    def __init__(self, student_id, full_name, email, password, user_type: UserType):
+    def __init__(self, student_id, full_name, email, password):
         super().__init__(
             student_id,
             full_name,
@@ -11,14 +10,23 @@ class Student(User):
             password,
             UserType.STUDENT
         )
-        self.__enrolled_course:[Course] = []
+        self.__enrolled_course:list = []
 
-        def enroll(course:Course) -> None:
-            pass
+    def enroll(self, course) -> None:
 
-        def drop(course:Course) -> None:
-            pass
+        pass
 
-        def view_grades() -> [Grade]:
-            pass
+    def drop(self, course) -> None:
 
+        pass
+
+    def view_grades(self) -> list:
+
+        pass
+
+    @property
+    def enrolled_courses(self):
+        return self.__enrolled_course
+    @enrolled_courses.setter
+    def enrolled_courses(self, course) -> None:
+        self.__enrolled_course = course
