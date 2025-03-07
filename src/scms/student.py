@@ -1,5 +1,5 @@
 from abstractuser import User
-import validator
+
 class Student(User):
     def __init__(self, full_name: str, password: str, email: str, student_id: str):
         self.full_name = full_name

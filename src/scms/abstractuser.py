@@ -1,4 +1,5 @@
-class User:
+from validator import Validator
+class User(Validator):
     def __init__(self, full_name: str, password: str, email: str, type: str):
         self.full_name = full_name
         self.email = email
