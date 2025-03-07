@@ -1,8 +1,8 @@
 from abc import ABC
 from src.scms.user_type import UserType
 
-class User(ABC):
-    def __init__(self, user_id:str, full_name:str, email:str, password:str, user_type:UserType):
+class User:
+    def __init__(self, full_name:str, password:str, email:str, user_type:str):
         self.__USER_ID = user_id
         self.full_name = full_name
         self.email = email
