@@ -5,8 +5,8 @@
 
 #Used to store test files
 /test/resources/*
-+/diagrams_scms.drawio
-+/src/text_format/
+/diagrams_scms.drawio
+/src/text_format/
 
 
 

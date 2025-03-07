@@ -1,14 +1,14 @@
 from django.core.validators import validate_email
 
 def verify_administrator(administrator) -> bool:
-    from scms.user_type import UserType
+    from text_format.trash.user_type import UserType
     return administrator.user_type == UserType.ADMINISTRATOR
 
 
 class SystemPortal:
     user_id = 1
     def __init__(self):
-        from scms.administrator import Administrator
+        from text_format.trash.administrator import Administrator
         self.__users: list = []
         self.__courses: list = []
         administrator:Administrator = Administrator(str(0), "Portal Administrator", "admin@admin.com", "admin-password")
