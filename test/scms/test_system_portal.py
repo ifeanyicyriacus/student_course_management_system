@@ -1,6 +1,6 @@
 import unittest
 from scms.system_portal import SystemPortal
-from scms.user_type import UserType
+from text_format.trash.user_type import UserType
 
 
 class SystemPortalTestCase(unittest.TestCase):
