@@ -2,6 +2,19 @@
 #Draw.io temp file
 /.$diagrams_scms.drawio.dtmp
 /.$diagrams_scms.drawio.bkp
+/diagrams_scms.drawio
+/src/text_format/
+
+#Used to store test files
+/test/resources/*
+/diagrams_scms.drawio
+/src/text_format/
+
+
+
+
+
+
 
 # ------GITHUB recommended ignored files for python project
 
