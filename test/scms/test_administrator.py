@@ -1,7 +1,7 @@
 import unittest
 
-from scms.system_portal import SystemPortal
-from scms.user import User
+from text_format.trash.system_portal import SystemPortal
+from text_format.trash.user import User
 from text_format.trash.user_type import UserType
 
 

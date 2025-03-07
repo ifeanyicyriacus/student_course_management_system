@@ -1,6 +1,6 @@
 
 from src.scms.course_manager import CourseManager
-from src.scms.user import User, UserType
+from text_format.trash.user import User, UserType
 from src.scms.course import Course
 
 
