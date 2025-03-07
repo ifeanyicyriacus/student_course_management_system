@@ -1,4 +1,4 @@
-from unittest import TestCase
+jmfrom unittest import TestCase
 from scms.instructor import Instructor
 from scms.course import Course
 from scms.student import Student
