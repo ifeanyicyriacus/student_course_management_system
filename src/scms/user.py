@@ -1,5 +1,5 @@
 from abc import ABC
-from scms.user_type import UserType
+from src.scms.user_type import UserType
 
 class User(ABC):
     def __init__(self, user_id:str, full_name:str, email:str, password:str, user_type:UserType):

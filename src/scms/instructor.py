@@ -1,7 +1,7 @@
 
-from scms.course_manager import CourseManager
-from scms.user import User, UserType
-from scms.course import Course
+from src.scms.course_manager import CourseManager
+from src.scms.user import User, UserType
+from src.scms.course import Course
 
 
 class Instructor(User, CourseManager):
