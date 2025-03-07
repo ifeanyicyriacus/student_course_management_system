@@ -19,7 +19,7 @@ class StudentTestCase(unittest.TestCase):
 
     def setUp(self):
         self.student = Student(self.id, self.full_name, self.email, self.password)
-        self.course = Course(self.course_id, sel )
+        self.course = Course(self.course_id, self)
     def test_student_can_enroll_course(self):
         self.student.enroll()
         # self.assertListEqual([], self.student.enrolled_courses)
