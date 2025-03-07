@@ -2,7 +2,7 @@ import unittest
 
 from scms.system_portal import SystemPortal
 from scms.user import User
-from scms.user_type import UserType
+from text_format.trash.user_type import UserType
 
 
 class AdministratorTestCase(unittest.TestCase):
