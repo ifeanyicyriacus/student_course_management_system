@@ -3,6 +3,16 @@
 /.$diagrams_scms.drawio.dtmp
 /.$diagrams_scms.drawio.bkp
 
+#Used to store test files
+/test/resources/*
+
+
+
+
+
+
+
+
 # ------GITHUB recommended ignored files for python project
 
 # Byte-compiled / optimized / DLL files
