@@ -1,12 +1,13 @@
-from scms.enrollment import Enrollment
+from src.scms.enrollment import Enrollment
 
-# from scms.instructor import Instructor
-# from scms.student import Student
+# from src.scms.instructor import Instructor
+# from src.scms.student import Student
 
-
+course_counter = 1
 class Course:
-    def __init__(self, course_id: str, course_name: str, course_description: str, instructor_id: str):
-        self.course_id = course_id
+
+    def __init__(self, course_name: str, course_description: str, instructor_id: str):
+        self.course_id = course_counter
         self.course_name = course_name
         self.course_description = course_description
         self.instructor_id = instructor_id

@@ -1,5 +1,5 @@
 
-from scms.user import User, UserType
+from src.scms.user import User, UserType
 
 class Student(User):
     def __init__(self, student_id, full_name, email, password):
