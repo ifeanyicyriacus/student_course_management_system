@@ -12,7 +12,7 @@ Student-Course-Management-System A Semicolon Project
 
 
 
-### Artifact: [Draw.io link]([link to files](https://app.diagrams.net/#Hifeanyicyriacus%2Fstudent_course_management_system%2Fmaster%2Fdiagrams_scms.drawio#%7B%22pageId%22%3A%22OcRK-k98SX2uyO5cT3SF%22%7D))
+### Artifact: [Draw.io file link](https://drive.google.com/file/d/15Q6PeSXhsruYpkOEw5uVO4Olx3fznwTG/view?usp=sharing)
 - Use Case Diagram
 - Class Diagram
 
