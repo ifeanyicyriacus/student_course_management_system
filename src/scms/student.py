@@ -1,11 +1,8 @@
-from user import User
+from src.scms.user import User
 
 class Student(User):
-    def __init__(self, full_name: str, password: str, email: str, student_id: str):
-        self.full_name = full_name
-        self.email = "validate_email"
-        self._password = password
-        self.type = "student"
+    def __init__(self, student_id: str, full_name: str, email: str, password: str):
+        super().__init__(full_name, email, password)
         self.student_id = student_id
 
     @property
@@ -14,4 +11,7 @@ class Student(User):
 
     @student_id.setter
     def student_id(self, student_id: str):
-        self.__student_id = student_id
+        from src.scms.validator import Validator
+        if Validator.validate_input(student_id):
+            self.__student_id = student_id
+        else: raise ValueError("Student ID is not valid")

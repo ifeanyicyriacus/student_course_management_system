@@ -1,20 +1,25 @@
 from unittest import TestCase
-import src.scms.student
-import src.scms.validator
-from scms import student
+from src.scms.student import Student
 
+class TestStudent(TestCase):
+    student_id = "1234"
+    full_name = "Adebayo kehinde"
+    password = "123"
+    email = "adebayosamuel6667@gmail.com"
+    empty = ""
 
-class Teststudent(TestCase):
-        def setUp(self):
-            self.student = student.Student(full_name="Adebayo kehinde", password="123", email="adebayosamuel6667@gmail.com", student_id="1234")
+    def setUp(self):
+        self.student = Student(self.student_id, self.full_name, self.email, self.password)
 
-        def test_full_name(self):
-            self.assertEqual(self.student.full_name, "Adebayo kehinde")
-            self.student.full_name = "Adebayo kehinde"
-            self.assertEqual(self.student.full_name, "Adebayo kehinde")
+    def test_student_id(self):
+        self.assertEqual(self.student.student_id, self.student_id)
+        self.student.student_id = "NEW_ID"
+        self.assertEqual(self.student.student_id, "NEW_ID")
 
-        def test_student_id(self):
-            self.assertEqual(self.student.student_id, "1234")
-            self.student.student_id = "1234"
-            self.assertEqual(self.student.student_id("1234"))
-
+    def test_setting_invalid_student_id_value_raises_error(self):
+        with self.assertRaises(ValueError):
+            Student(self.empty, self.full_name, self.email, self.password)
+        with self.assertRaises(ValueError):
+            self.student.student_id = ""
+        with self.assertRaises(ValueError):
+            self.student.student_id = "         "

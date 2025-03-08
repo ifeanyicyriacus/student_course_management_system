@@ -2,7 +2,8 @@ import abc
 from src.scms.validator import Validator
 
 class User(abc.ABC):
-    def __init__(self, full_name: str, password: str, email: str):
+    __password = None
+    def __init__(self, full_name: str, email: str, password: str):
         self.full_name = full_name
         self.email = email
         self._password = password
@@ -37,12 +38,11 @@ class User(abc.ABC):
             self.__password = password
         else: raise ValueError("Invalid password")
 
-    # @property
-    # def type(self) -> str:
-    #     return self.__user_type
-    #
-    # @type.setter
-    # def type(self, type: str):
-    #     self.__user_type = type
+    def verify_password(self, password: str) -> bool:
+        return Validator.validate_input(password) and password == self.__password
 
+    def update_password(self, password: str, new_password: str) -> None:
+        if self.verify_password(password):
+            self._password = new_password
+        else: raise ValueError("Incorrect password")
 
