@@ -1,5 +1,5 @@
 from unittest import TestCase
-from validator import Validator
+from src.scms.validator import Validator
 
 class TestValidator(TestCase):
     def setUp(self):
