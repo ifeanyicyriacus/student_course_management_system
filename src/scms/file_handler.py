@@ -6,7 +6,6 @@ class FileHandler:
 
     def __set_file_path(self, file_path):
         self.__file_path = os.path.abspath(file_path)
-        print(self.__file_path)
 
     def write(self, content:str) -> None:
         try:

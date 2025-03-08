@@ -8,14 +8,11 @@ class TestFileHandlerFunctions(unittest.TestCase):
 
     def setUp(self):
         random_file_name = str(uuid.uuid4())
-        self.file_path = f"resources/{random_file_name}.txt"
+        self.file_path = f"./../data/test/{random_file_name}.txt"
         self.file_handler = FileHandler(self.file_path)
-        print(self.file_path)
 
     def tearDown(self):
-        print(self.file_path)
         os.remove(self.file_path)
-        # ho to delete a file delete file
 
     def test_write_function_writes_a_line_to_file(self):
         self.file_handler.write("hello world")
