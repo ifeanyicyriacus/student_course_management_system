@@ -1,25 +1,20 @@
-import unittest
-
-from scms.course import Course
-from scms.instructor import Instructor
-from scms.student import Student
-
-class StudentTestCase(unittest.TestCase):
-    student_id = "0"
-    instructor_id = "1"
-    full_name = "sample name"
-    email = "sample email"
-    password = "password"
-
-    course_id = "12"
-    course_name = "sample course"
-    course_description = "sample description"
-    instructor_assigned = Instructor(instructor_id, full_name, email, password)
+from unittest import TestCase
+import src.scms.student
+import src.scms.validator
+from scms import student
 
 
-    def setUp(self):
-        self.student = Student(self.id, self.full_name, self.email, self.password)
-        self.course = Course(self.course_id, self)
-    def test_student_can_enroll_course(self):
-        self.student.enroll()
-        # self.assertListEqual([], self.student.enrolled_courses)
+class Teststudent(TestCase):
+        def setUp(self):
+            self.student = student.Student(full_name="Adebayo kehinde", password="123", email="adebayosamuel6667@gmail.com", student_id="1234")
+
+        def test_full_name(self):
+            self.assertEqual(self.student.full_name, "Adebayo kehinde")
+            self.student.full_name = "Adebayo kehinde"
+            self.assertEqual(self.student.full_name, "Adebayo kehinde")
+
+        def test_student_id(self):
+            self.assertEqual(self.student.student_id, "1234")
+            self.student.student_id = "1234"
+            self.assertEqual(self.student.student_id("1234"))
+

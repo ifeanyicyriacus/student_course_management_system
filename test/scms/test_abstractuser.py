@@ -1,5 +1,5 @@
 from unittest import TestCase
-from abstractuser import User
+from src.scms.abstractuser import User
 
 class TestUser(TestCase):
     def setUp(self):
