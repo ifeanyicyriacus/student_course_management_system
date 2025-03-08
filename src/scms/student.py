@@ -1,4 +1,4 @@
-from abstractuser import User
+from user import User
 
 class Student(User):
     def __init__(self, full_name: str, password: str, email: str, student_id: str):

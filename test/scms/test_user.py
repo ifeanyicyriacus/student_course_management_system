@@ -1,9 +1,9 @@
 from unittest import TestCase
-from src.scms.abstractuser import User
+from src.scms.user import User
 
 class TestUser(TestCase):
     def setUp(self):
-        self.user = User(full_name="Adebayo kehinde", password="user123", email="adebayosamuel6667@gmail.com", type="instructor")
+        self.user = User(full_name="Adebayo kehinde", password="user123", email="adebayosamuel6667@gmail.com")
 
     def test_full_name(self):
         self.assertEqual(self.user.full_name, "Adebayo kehinde")
@@ -20,9 +20,9 @@ class TestUser(TestCase):
         self.user._password = "user123"
         self.assertEqual(self.user._password, "user123")
 
-    def test_user_type(self):
-        self.assertEqual(self.user.user_type, "instructor")
-        self.user.user_type = "instructor"
-        self.assertEqual(self.user.user_type, "instructor")
+    # def test_user_type(self):
+    #     self.assertEqual(self.user.user_type, "instructor")
+    #     self.user.user_type = "instructor"
+    #     self.assertEqual(self.user.user_type, "instructor")
 
 
