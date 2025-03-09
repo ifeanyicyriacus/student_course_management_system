@@ -12,10 +12,10 @@ class Validator:
     def validate_input(input_str: str) -> bool:
         return bool(input_str) and input_str.strip() != ""
 
-    @classmethod
-    def validate_grade(cls, grade:str) -> bool:
-        if grade.isdigit():
+    @staticmethod
+    def validate_grade(grade:str|int) -> bool:
+        if str(grade).isdigit():
             grade = int(grade)
-            if grade >= 0 and grade >= 100:
+            if 0 <= grade <= 100:
                 return True
         else: return False
