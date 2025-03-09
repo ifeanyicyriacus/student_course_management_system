@@ -1,28 +1,17 @@
+from src.scms.user import User
 
-from src.scms.course_manager import CourseManager
-from src.scms.user import User, UserType
-from src.scms.course import Course
-
-
-class Instructor(User, CourseManager):
+class Instructor(User):
     def __init__(self, instructor_id:str, full_name:str, email:str, password:str):
-        super().__init__(
-            instructor_id,
-            full_name,
-            email,
-            password,
-            UserType.INSTRUCTOR
-        )
-        self.__assigned_course:[Course] = []
+        super().__init__(full_name, email, password)
+        self.instructor_id = instructor_id
 
-    def assign_grade(self, student, course, grade_value: str):
-        pass
+    @property
+    def instructor_id(self) -> str:
+        return self.__instructor_id
 
-    def view_enrolled_students(self, course) -> list:
-        pass
-
-    def create_course(self, course_id:str, course_name:str, course_description:str):
-        pass
-
-    def delete_course(self, course_id:str):
-        pass
+    @instructor_id.setter
+    def instructor_id(self, instructor_id:str):
+        from src.scms.validator import Validator
+        if Validator.validate_input(instructor_id):
+            self.__instructor_id = instructor_id
+        else: raise ValueError("Instructor ID is not valid")

@@ -1,21 +1,26 @@
+import os
 
 class FileHandler:
-    @classmethod
-    def write(cls,file_path:str, content:str) -> None:
+    def __init__(self, file_path):
+        self.__set_file_path(file_path)
+
+    def __set_file_path(self, file_path):
+        self.__file_path = os.path.abspath(file_path)
+
+    def write(self, content:str) -> None:
         try:
-            with open(file_path, 'a') as file:
+            with open(self.__file_path, 'a') as file:
                 file.write(content+'\n')
         except FileNotFoundError:
-            with open(file_path, 'w') as file:
+            with open(self.__file_path, 'w') as file:
                 file.write(content+'\n')
 
-    @classmethod
-    def read(cls, file_path:str) -> [str]:
+    def read(self) -> [str]:
         try:
-            with open(file_path, 'r') as file:
+            with open(self.__file_path, 'r') as file:
                 return file.read().split('\n')[:-1]
         except FileNotFoundError:
-            with open(file_path, 'w') as file:
+            with open(self.__file_path, 'w') as file:
                 file.write('')
-            return cls.read(file_path)
+            return self.read()
 

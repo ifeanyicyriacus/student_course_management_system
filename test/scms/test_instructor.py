@@ -1,25 +1,25 @@
 from unittest import TestCase
-from scms.instructor import Instructor
-from scms.course import Course
-from scms.student import Student
+from src.scms.instructor import Instructor
 
 class TestInstructor(TestCase):
+    instructor_id = "1234"
+    full_name = "Onyinyechi Ekezie"
+    password = "123"
+    email = "onyii@semicolon.com"
+    empty = ""
 
-# def test_create_course(self):
-#     instructor = Instructor(1, "adebayo kehinde", "adebayosamuel6667@gmail.com", "password123")
-#     course = Course("Python 101")
-#     instructor.create_course(course)
-#     self.assertIn(course, instructor.courses_taught)
-#
-# def test_view_students(self):
-#     instructor = Instructor(1, "adebayo", "adebayosamuel6667@gmail.com", "password123")
-#     course = Course("Python ")
-#     student1 = Student("samuel")
-#     student2 = Student("ayo")
-#     course.students.append(student1)
-#     course.students.append(student2)
-#     instructor.create_course(course)
-#
+    def setUp(self):
+        self.instructor = Instructor(self.instructor_id, self.full_name, self.email, self.password)
 
+    def test_instructor_id(self):
+        self.assertEqual(self.instructor.instructor_id, self.instructor_id)
+        self.instructor.instructor_id = "NEW_ID"
+        self.assertEqual(self.instructor.instructor_id, "NEW_ID")
 
-
+    def test_setting_invalid_instructor_id_value_raises_error(self):
+        with self.assertRaises(ValueError):
+            Instructor(self.empty, self.full_name, self.email, self.password)
+        with self.assertRaises(ValueError):
+            self.instructor.instructor_id = ""
+        with self.assertRaises(ValueError):
+            self.instructor.instructor_id = "         "

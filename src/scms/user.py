@@ -1,49 +1,53 @@
-from abc import ABC
-from src.scms.user_type import UserType
+import abc
+from src.scms.validator import Validator
+from src.scms.cryptography import Cryptography
 
-class User:
-    def __init__(self, full_name:str, password:str, email:str, user_type:str):
-        self.__USER_ID = user_id
+class User(abc.ABC):
+    __password = None
+    def __init__(self, full_name: str, email: str, password: str):
         self.full_name = full_name
         self.email = email
         self._password = password
-        self.user_type = user_type
-
-    @property
-    def user_id(self) -> str:
-        return self.__USER_ID
 
     @property
     def full_name(self) -> str:
         return self.__full_name
+
     @full_name.setter
-    def full_name(self, full_name:str):
-        self.__full_name = full_name
+    def full_name(self, full_name: str):
+        if Validator.validate_input(full_name):
+            self.__full_name = full_name
+        else: raise ValueError("Invalid full name")
 
     @property
     def email(self) -> str:
         return self.__email
+
     @email.setter
-    def email(self, email:str):
-        self.__email = email
+    def email(self, email: str):
+        if Validator.validate_email(email):
+            self.__email = email
+        else: raise ValueError("Invalid email")
 
     @property
     def _password(self) -> str:
-        return self.__password
+        return str(self.__password)
+
     @_password.setter
-    def _password(self, password:str):
-        self.__password = password
+    def _password(self, password: str):
+        if Validator.validate_input(password):
+            self.__password = Cryptography.encrypt(password)
+        else: raise ValueError("Invalid password")
+
+    def verify_password(self, password: str) -> bool:
+        return Validator.validate_input(password) and Cryptography.verify(password, self.__password)
+
+    def update_password(self, password: str, new_password: str) -> None:
+        if self.verify_password(password):
+            self._password = new_password
+        else: raise ValueError("Incorrect password")
 
     @property
-    def user_type(self) -> UserType:
-        return self.__user_type
-    @user_type.setter
-    def user_type(self, user_type:UserType):
-        self.__user_type = user_type
+    def password(self):
+        return self._password
 
-    def change_password(self, old_password:str, new_password:str) -> None:
-        if self.authenticate_password(old_password): self._password = new_password
-        else: raise ValueError("Wrong password, try again")
-
-    def authenticate_password(self, password) -> bool:
-        return self._password == password
