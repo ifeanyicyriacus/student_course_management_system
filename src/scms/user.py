@@ -1,5 +1,6 @@
 import abc
 from src.scms.validator import Validator
+from src.scms.cryptography import Cryptography
 
 class User(abc.ABC):
     __password = None
@@ -30,16 +31,16 @@ class User(abc.ABC):
 
     @property
     def _password(self) -> str:
-        return self.__password
+        return str(self.__password)
 
     @_password.setter
     def _password(self, password: str):
         if Validator.validate_input(password):
-            self.__password = password
+            self.__password = Cryptography.encrypt(password)
         else: raise ValueError("Invalid password")
 
     def verify_password(self, password: str) -> bool:
-        return Validator.validate_input(password) and password == self.__password
+        return Validator.validate_input(password) and Cryptography.verify(password, self.__password)
 
     def update_password(self, password: str, new_password: str) -> None:
         if self.verify_password(password):
