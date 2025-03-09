@@ -1,8 +1,7 @@
 import os
 from unittest import TestCase
 
-from src.scms.file_handler import FileHandler
-from src.scms.data_loader import DataLoader
+from src.scms.data_restore import DataRestore, FileHandler
 
 
 class TestDataLoader(TestCase):
@@ -29,10 +28,13 @@ class TestDataLoader(TestCase):
         instructor_file_handler.write("InstructorID2, fullName2, sk@email.com, password2")
         instructor_file_handler.write("InstructorID3, fullName3, chinedu@email.com, password3")
 
-        self.data_loader = DataLoader(self.courses_file_path,
-                                      self.enrollments_file_path,
-                                      self.students_file_path,
-                                      self.instructors_file_path)
+        data_restore = DataRestore(self.courses_file_path,
+                                        self.enrollments_file_path,
+                                        self.students_file_path,
+                                        self.instructors_file_path)
+        self.restored_data = data_restore.restore()
+
+
 
     def tearDown(self):
         os.remove(self.courses_file_path)
@@ -41,7 +43,7 @@ class TestDataLoader(TestCase):
         os.remove(self.instructors_file_path)
 
     def test_get_courses(self):
-        courses = self.data_loader.get_courses()
+        courses = self.restored_data[0]
         self.assertEqual(len(courses), 3)
         self.assertEqual(courses[0].course_id, "courseID1")
         self.assertEqual(courses[0].course_name, "courseName1")
@@ -53,7 +55,7 @@ class TestDataLoader(TestCase):
         self.assertEqual(courses[2].instructor_id, "InstructorID3")
 
     def test_get_enrollments(self):
-        enrollments = self.data_loader.get_enrollments()
+        enrollments = self.restored_data[1]
         self.assertEqual(len(enrollments), 3)
         self.assertEqual(enrollments[0].course_id, "courseID1")
         self.assertEqual(enrollments[0].student_id, "studentID1")
@@ -61,15 +63,15 @@ class TestDataLoader(TestCase):
         self.assertEqual(enrollments[0].timestamp, "2025-03-09")
 
     def test_get_students(self):
-        students = self.data_loader.get_students()
+        students = self.restored_data[2]
         self.assertEqual(len(students), 2)
         self.assertEqual(students[0].student_id, "studentID1")
         self.assertEqual(students[0].full_name, "fullName1")
         self.assertEqual(students[0].email, "ifeanyi@email.com")
-        self.assertEqual(students[0]._password, "password1" )
+        self.assertTrue(students[0].verify_password("password1"))
 
     def test_get_instructors(self):
-        instructors = self.data_loader.get_instructors()
+        instructors = self.restored_data[3]
         self.assertEqual(len(instructors), 3)
         self.assertEqual(instructors[0].email, "chibuzo@email.com")
         self.assertEqual(instructors[1].email, "sk@email.com")

@@ -5,14 +5,14 @@ from src.scms.student import Student
 from src.scms.file_handler import FileHandler
 
 
-class DataLoader:
+class DataRestore:
     def __init__(self, courses_file_path:str, enrollments_file_path:str, students_file_path:str, instructors_file_path:str):
         self.__courses_file_handler: FileHandler = FileHandler(courses_file_path)
         self.__enrollments_file_handler: FileHandler = FileHandler(enrollments_file_path)
         self.__students_file_handler: FileHandler = FileHandler(students_file_path)
         self.__instructors_file_handler: FileHandler = FileHandler(instructors_file_path)
 
-    def get_courses(self) -> list[Course]:
+    def __get_courses(self) -> list[Course]:
         courses:[Course] = []
         for course_info in self.__courses_file_handler.read():
             course_attributes:[str] = course_info.split(",")
@@ -22,7 +22,7 @@ class DataLoader:
                                   instructor_id=course_attributes[3].strip()))
         return courses
 
-    def get_enrollments(self) -> list[Enrollment]:
+    def __get_enrollments(self) -> list[Enrollment]:
         enrollments:[Enrollment] = []
         for enrollment_info in self.__enrollments_file_handler.read():
             enrollment_attributes:[str] = enrollment_info.split(",")
@@ -32,7 +32,7 @@ class DataLoader:
                                           timestamp=enrollment_attributes[3].strip()))
         return enrollments
 
-    def get_students(self) -> list[Student]:
+    def __get_students(self) -> list[Student]:
         students:[Student] = []
         for student_info in self.__students_file_handler.read():
             student_attributes:[str] = student_info.split(",")
@@ -42,7 +42,7 @@ class DataLoader:
                                     password=student_attributes[3].strip()))
         return students
 
-    def get_instructors(self) -> list[Instructor]:
+    def __get_instructors(self) -> list[Instructor]:
         instructors:[Instructor] = []
         for instructor_info in self.__instructors_file_handler.read():
             instructor_attributes:[str] = instructor_info.split(",")
@@ -51,3 +51,6 @@ class DataLoader:
                                           email=instructor_attributes[2].strip(),
                                           password=instructor_attributes[3].strip()))
         return instructors
+
+    def restore(self) -> tuple[list[Course], list[Enrollment], list[Student], list[Instructor]]:
+        return self.__get_courses(), self.__get_enrollments(), self.__get_students(), self.__get_instructors()
