@@ -47,3 +47,7 @@ class User(abc.ABC):
             self._password = new_password
         else: raise ValueError("Incorrect password")
 
+    @property
+    def password(self):
+        return self._password
+
