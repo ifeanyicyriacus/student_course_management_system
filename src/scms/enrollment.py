@@ -4,11 +4,11 @@ from src.scms.validator import Validator
 
 
 class Enrollment:
-    def __init__(self, course_id:str, student_id:str):
+    def __init__(self, course_id:str, student_id:str, grade:int|str = 0, timestamp:str = str(date.today().isoformat())):
         self.course_id = course_id
         self.student_id = student_id
-        self.grade = 0
-        self.timestamp:str = date.today().isoformat()
+        self.grade = grade
+        self.__TIMESTAMP:str = timestamp
 
     @property
     def course_id(self) -> str:
@@ -37,3 +37,6 @@ class Enrollment:
             self.__grade = int(grade)
         else: raise ValueError("Invalid grade")
 
+    @property
+    def timestamp(self) -> str:
+        return self.__TIMESTAMP
