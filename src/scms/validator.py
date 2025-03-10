@@ -19,3 +19,9 @@ class Validator:
             if 0 <= grade <= 100:
                 return True
         else: return False
+
+    @classmethod
+    def validate_password(cls, value):
+        # Must contain 8 - 16 characters
+        # [uppercase, lowercase, number and special characters.]
+        return cls.validate_input(value)
