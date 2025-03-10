@@ -4,7 +4,7 @@ from unittest import TestCase
 from src.scms.data_restore import DataRestore, FileHandler
 
 
-class TestDataLoader(TestCase):
+class TestDataRestore(TestCase):
     directory = "test"
     courses_file_path = f"./../data/{directory}/courses.txt"
     enrollments_file_path = f"./../data/{directory}/enrollments.txt"
