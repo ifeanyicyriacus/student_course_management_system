@@ -20,8 +20,10 @@ class Validator:
                 return True
         else: return False
 
-    @classmethod
-    def validate_password(cls, value):
-        # Must contain 8 - 16 characters
-        # [uppercase, lowercase, number and special characters.]
-        return cls.validate_input(value)
+    @staticmethod
+    def validate_password(password:str):
+        # Password must contain 8 - 16 characters [uppercase, lowercase, number and special characters
+        password_pattern = re.compile(
+            r"(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.:;/\\`~\[\]{}()<>=+\-_ #!$@%*?^&])[A-Za-z\d.:;/\\`~\[\]{}()<>=+\-_ #!$@%*?^&]{8,16}$)"
+        )
+        return bool(password_pattern.match(password))
