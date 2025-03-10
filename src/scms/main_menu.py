@@ -1,25 +1,19 @@
-from unittest import case
-
 import sys
 
-from menues.okoli_bank_atm import error_message
+from scms.instructor_menu import InstructorMenu
+from scms.student_menu import StudentMenu
+from scms.ui_styling import TextColor, ClearingText
 from scms.validator import Validator
-from src.scms.student import Student
-from src.scms.instructor import Instructor
-from src.scms.portal import Portal
-
+from scms.student import Student
+from scms.instructor import Instructor
+from scms.portal import Portal
 APP_NAME = "SCMS"
 
-
-class StudentMenu:
-    pass
-
-
-class Main:
+class MainMenu(TextColor, ClearingText):
     portal = Portal()
     current_user: Student | Instructor | None = None
 
-    def main(self) -> None:
+    def start(self) -> None:
         print_line()
         print(success_message(f"""
                                                                 *** {APP_NAME} ***
@@ -89,33 +83,32 @@ class Main:
 
     def student_dashboard(self, prompt:str) -> None:
         clear_screen()
-        while True:
-            print_line()
-            print("Welcome to Student Dashboard".center(150))
-            print_line()
+        print_line()
+        print("Welcome to Student Dashboard".center(150))
+        print_line()
 
-            menu_prompt = """
-            Choose one of the options:
-            1.Enroll in a course
-            2.View my courses
-            3.View my grades
-            4.View my instructor
-            5.Manage your account
-            6.Logout
-            0.Exit
-        
-            """ + prompt + "\n>>>"
-            choice = input_int(menu_prompt)
-            
-            match choice:
-                case 1: StudentMenu.enroll_in_course(self)
-                case 2: StudentMenu.view_my_courses(self)
-                case 3: StudentMenu.view_my_grades(self)
-                case 4: StudentMenu.view_my_instructor(self)
-                case 5: StudentMenu.manage_account(self)
-                case 6: self.logout()
-                case 0: exit_program()
-                case _: self.student_dashboard(error_message("Invalid selection: available options are (1 - 6 & 0) Try again"))
+        student_menu:StudentMenu = StudentMenu(self.current_user)
+        menu_prompt = """
+        Choose one of the options:
+        1.Enroll in a course
+        2.View my courses
+        3.View my grades
+        4.View my instructor
+        5.Manage your account
+        6.Logout
+        0.Exit
+    
+        """ + prompt + "\n>>>"
+        choice = input_int(menu_prompt)
+        match choice:
+            case 1: student_menu.enroll_in_course()
+            case 2: student_menu.view_my_courses()
+            case 3: student_menu.view_my_grades()
+            case 4: student_menu.view_my_instructor()
+            case 5: student_menu.manage_account()
+            case 6: self.logout()
+            case 0: exit_program()
+            case _: self.student_dashboard(error_message("Invalid selection: available options are (1 - 6 & 0) Try again"))
 
 
     def instructor_dashboard(self, prompt) -> None:
@@ -124,6 +117,7 @@ class Main:
         print("Welcome to Instructor Dashboard".center(150))
         print_line()
 
+        instructor_menu:InstructorMenu = InstructorMenu(self.current_user)
         menu_prompt = """
         Choose one of the options:
         1. Create a new course
@@ -136,10 +130,10 @@ class Main:
         """ + prompt + "\n>>>"
         choice = input(menu_prompt)
         match choice:
-            case 1: InstructorMenu.create_new_course(self)
-            case 2: InstructorMenu.assign_grades(self)
-            case 3: InstructorMenu.edit_grades(self)
-            case 4: InstructorMenu.view_students_enrolled_in_course(self)
+            case 1: instructor_menu.create_new_course()
+            case 2: instructor_menu.assign_grades()
+            case 3: instructor_menu.edit_grades()
+            case 4: instructor_menu.view_students_enrolled_in_course()
             case 5: self.logout()
             case 0: exit_program()
             case _: self.instructor_dashboard(error_message("Invalid selection: available options are (1 - 5 & 0) Try again"))
@@ -186,7 +180,7 @@ def input_password(prompt = "Enter your password: "):
         return value
     else:
         print(error_message("Invalid input. Enter a password and Try again."))
-        # print(info_message("Must contain 8 - 16 characters [uppercase, lowercase, number and special characters.]"))
+        print(info_message("Must contain 8 - 16 characters [uppercase, lowercase, number and special characters.]"))
         return input_password(prompt)
 
 def error_message(message:str) -> str:
@@ -201,8 +195,7 @@ def info_message(message:str) -> str:
 def clear_screen() -> None:
     print("\033[H\033[2J")
 
-
-Main().main()
+MainMenu().start()
 
 
 
