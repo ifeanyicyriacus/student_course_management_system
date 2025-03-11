@@ -7,10 +7,9 @@ from src.scms.data_restore import DataRestore
 from src.scms.data_backup import DataBackup
 
 
-
 class Portal:
-    course:[Course] = []
-    enrollment:[Enrollment] = []
+    courses:[Course] = []
+    enrollments:[Enrollment] = []
     students: [Student] = []
     instructors: [Instructor] = []
 
@@ -72,8 +71,12 @@ class Portal:
             self.instructors.append(new_buddy)
             self.backup_instructor(new_buddy)
 
+
     def generate_instructor_id(self) -> str:
         return f"INS{len(self.instructors) + 100000}"
 
     def generate_student_id(self) -> str:
         return f"STU{len(self.instructors) + 100000}"
+
+    def generate_course_id(self) -> str:
+        return f"COU{len(self.courses) + 100000}"
