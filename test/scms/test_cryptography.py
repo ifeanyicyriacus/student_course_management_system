@@ -3,7 +3,7 @@ from src.scms.cryptography import Cryptography
 
 class TestCryptography(unittest.TestCase):
     def test_encrypt(self):
-        encrypted_txt = Cryptography.encrypt("hello")
+        encrypted_txt:str = Cryptography.encrypt("hello")
         self.assertTrue(Cryptography.verify("hello", encrypted_txt))
 
     def test_that_verify_returns_correct_password(self):

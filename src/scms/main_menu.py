@@ -2,14 +2,13 @@ import sys
 
 from scms.instructor_menu import InstructorMenu
 from scms.student_menu import StudentMenu
-from scms.ui_styling import TextColor, ClearingText
 from scms.validator import Validator
 from scms.student import Student
 from scms.instructor import Instructor
 from scms.portal import Portal
 APP_NAME = "SCMS"
 
-class MainMenu(TextColor, ClearingText):
+class MainMenu:
     portal = Portal()
     current_user: Student | Instructor | None = None
 
@@ -73,10 +72,13 @@ class MainMenu(TextColor, ClearingText):
         print("Login to your account")
         email = input_email()
         password = input_password()
+
         self.current_user = self.portal.login(email, password)
+
+        print(type(self.current_user))
         if self.current_user is None:
             return self.main_menu(error_message("Login Failed: Incorrect email or password."))
-        elif self.current_user is Student:
+        elif type(self.current_user) is Student:
             return self.student_dashboard(success_message(f"Student Login Successful! Welcome back, {self.current_user.full_name}!"))
         else:
             return self.instructor_dashboard(success_message(f"Instructor Login Successful! Welcome back, {self.current_user.full_name}!"))
@@ -128,7 +130,7 @@ class MainMenu(TextColor, ClearingText):
         0. Exit
     
         """ + prompt + "\n>>>"
-        choice = input(menu_prompt)
+        choice = input_int(menu_prompt)
         match choice:
             case 1: instructor_menu.create_new_course()
             case 2: instructor_menu.assign_grades()
@@ -153,7 +155,7 @@ def print_line() -> None:
 def input_email() -> str:
     email = input_str("Enter your email: ")
     if Validator.validate_email(email):
-        return email
+        return email.lower()
     else:
         print("Invalid email. Try again.")
         return input_email()
