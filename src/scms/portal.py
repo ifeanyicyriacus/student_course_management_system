@@ -11,8 +11,8 @@ from src.scms.data_backup import DataBackup
 class Portal:
     course:[Course] = []
     enrollment:[Enrollment] = []
-    users: [Student | Instructor] = []
-
+    students: [Student] = []
+    instructors: [Instructor] = []
 
     def __init__(self):
         directory = "dev"
@@ -24,7 +24,7 @@ class Portal:
 
         data_backup = DataBackup(f"./../../data/{directory}/courses.txt",
                                    f"./../../data/{directory}/enrollments.txt",
-                                   f"./../data/{directory}/students.txt",
+                                   f"./../../data/{directory}/students.txt",
                                    f"./../../data/{directory}/instructors.txt")
         self.backup_course = data_backup.add_to_courses
         self.backup_enrollment = data_backup.add_to_enrollments
@@ -33,38 +33,47 @@ class Portal:
 
         self.courses: list[Course] = self.restored_data[0]
         self.enrollments: list[Enrollment] = self.restored_data[1]
-        self.users:[Student|Instructor] = self.restored_data[2] + self.restored_data[3]
+        self.students:[Student] = self.restored_data[2]
+        self.instructors:[Instructor] = self.restored_data[3]
 
 
     def register_instructor(self, full_name, email, password) -> None:
-        new_buddy:Instructor = Instructor("", full_name, email, password)
+        new_buddy:Instructor = Instructor(self.generate_instructor_id(), full_name, email, password)
         self.add_user(new_buddy)
 
     def register_student(self, full_name, email, password) -> None:
-        new_buddy:Student = Student("", full_name, email, password)
+        new_buddy:Student = Student(self.generate_student_id(), full_name, email, password)
         self.add_user(new_buddy)
 
     def check_duplicate_email(self, email:str) -> bool:
-        for user in self.users:
-            if user.email.lower() == email.lower():
+        for student in self.students:
+            if student.email.lower() == email.lower():
+                return True
+        for instructor in self.instructors:
+            if instructor.email.lower() == email.lower():
                 return True
         return False
 
+    def login(self, email:str, password:str) -> Student|Instructor|None:
+        for student in self.students:
+            if student.email == email and Cryptography.verify(password, student.password):
+                return student
 
-    def login(self, email, password) -> Student|Instructor|None:
-        for user in self.users:
-            if user.email == email and Cryptography.verify(password, user.password):
-                return user
+        for instructor in self.instructors:
+            if instructor.email == email and Cryptography.verify(password, instructor.password):
+                return instructor
         return None
 
     def add_user(self, new_buddy:Student|Instructor) -> None:
-        self.users.append(new_buddy)
-        if new_buddy is Student:
+        if type(new_buddy) is Student:
+            self.students.append(new_buddy)
             self.backup_student(new_buddy)
-        elif new_buddy is Instructor:
+        elif type(new_buddy) is Instructor:
+            self.instructors.append(new_buddy)
             self.backup_instructor(new_buddy)
 
-    # def find_user_by_email(self, email):
-    #     for user in self.users:
-    #         if user.email == email:
-    #             return user
+    def generate_instructor_id(self) -> str:
+        return f"INS{len(self.instructors) + 100000}"
+
+    def generate_student_id(self) -> str:
+        return f"STU{len(self.instructors) + 100000}"

@@ -2,9 +2,9 @@ import bcrypt
 
 class Cryptography:
     @staticmethod
-    def encrypt(text) -> bytes:
-        return bcrypt.hashpw(text.encode('utf-8'), bcrypt.gensalt())
+    def encrypt(text) -> str:
+        return bcrypt.hashpw(text.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
     @staticmethod
-    def verify(text:str, encrypted_text:bytes):
-        return bcrypt.checkpw(text.encode('utf-8'), encrypted_text)
+    def verify(text:str, encrypted_text:str) -> bool:
+        return bcrypt.checkpw(text.encode('utf-8'), encrypted_text.encode('utf-8'))
