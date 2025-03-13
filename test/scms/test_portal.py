@@ -1,0 +1,39 @@
+import unittest
+
+class MyTestCase(unittest.TestCase):
+    def test_student_can_be_register(self):
+        ...
+
+    def test_instructor_can_be_register(self):
+        ...
+
+    def test_portal_prevent_duplicate_email_during_registration(self):
+        ...
+
+    def test_portal_can_log_in(self):
+        ...
+
+    def test_portal_can_add_user_(self):
+        ...
+
+    def test_portal_allows_student_to_enroll_in_course(self):
+        ...
+
+    def test_portal_can_get_course_by_student_id(self):
+        ...
+
+    def test_portal_can_get_instructor_by_student_id(self):
+        ...
+
+    def test_portal_can_get_enrollment_by_student_id(self):
+        ...
+
+    def test_portal_allows_instructor_to_create_course(self):
+        ...
+
+    def test_portal_can_allow_instructor_assign_grades(self):
+        ...
+
+    def test_portal_can_get_students_by_course_id(self):
+        ...
+

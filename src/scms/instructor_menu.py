@@ -22,7 +22,7 @@ class InstructorMenu:
         Choose one of the options:
         1. Create a new course
         2. Assign grades
-        3. View students enrolled in a course
+        3. View students enrolled in my course
         4. Manage your account
         5. Logout
         0. Exit
@@ -54,8 +54,8 @@ class InstructorMenu:
         pass
 
 
-    def view_students_enrolled_in_course(self):
-
+    def view_students_enrolled_in_my_course(self):
+        # ask instructor for
         pass
 
     def manage_account(self):

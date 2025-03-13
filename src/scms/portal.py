@@ -45,14 +45,14 @@ Data Restore Complete:
 
 
     def register_instructor(self, full_name, email, password) -> None:
-        new_buddy:Instructor = Instructor(self.generate_instructor_id(), full_name, email, password)
-        self.add_user(new_buddy)
+        new_buddy:Instructor = Instructor(self._generate_instructor_id(), full_name, email, password)
+        self._add_user(new_buddy)
 
     def register_student(self, full_name, email, password) -> None:
-        new_buddy:Student = Student(self.generate_student_id(), full_name, email, password)
-        self.add_user(new_buddy)
+        new_buddy:Student = Student(self._generate_student_id(), full_name, email, password)
+        self._add_user(new_buddy)
 
-    def check_duplicate_email(self, email:str) -> bool:
+    def _check_duplicate_email(self, email:str) -> bool:
         for student in self.students:
             if student.email.lower() == email.lower():
                 return True
@@ -71,7 +71,7 @@ Data Restore Complete:
                 return instructor
         return None
 
-    def add_user(self, new_buddy:Student|Instructor) -> None:
+    def _add_user(self, new_buddy:Student|Instructor) -> None:
         if type(new_buddy) is Student:
             self.students.append(new_buddy)
             self.backup_student(new_buddy)
@@ -79,14 +79,13 @@ Data Restore Complete:
             self.instructors.append(new_buddy)
             self.backup_instructor(new_buddy)
 
-
-    def generate_instructor_id(self) -> str:
+    def _generate_instructor_id(self) -> str:
         return f"INS{len(self.instructors) + 100000}"
 
-    def generate_student_id(self) -> str:
+    def _generate_student_id(self) -> str:
         return f"STU{len(self.instructors) + 100000}"
 
-    def generate_course_id(self) -> str:
+    def _generate_course_id(self) -> str:
         return f"COU{len(self.courses) + 1000}"
 
 #     student and instructor function start here
