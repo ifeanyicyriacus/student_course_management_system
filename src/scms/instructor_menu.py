@@ -1,3 +1,4 @@
+from scms.manage_account_menu import ManageAccountMenu
 from src.scms.instructor import Instructor
 from src.scms.portal import Portal
 from std_utility.io_function import input_int, error_message, clear_screen, print_line, exit_program
@@ -21,8 +22,8 @@ class InstructorMenu:
         Choose one of the options:
         1. Create a new course
         2. Assign grades
-        3. View students enrolled in a course
-        4.Manage your account
+        3. View students enrolled in my course
+        4. Manage your account
         5. Logout
         0. Exit
 
@@ -32,7 +33,7 @@ class InstructorMenu:
             case 1: self.create_new_course()
             case 2: self.assign_grades()
             case 3: self.view_students_enrolled_in_course()
-            case 3: self.manage_account()
+            case 4: ManageAccountMenu(self._instructor, self._portal).start()
             case 5: pass
             case 0: exit_program()
             case _:
@@ -53,8 +54,8 @@ class InstructorMenu:
         pass
 
 
-    def view_students_enrolled_in_course(self):
-
+    def view_students_enrolled_in_my_course(self):
+        # ask instructor for
         pass
 
     def manage_account(self):

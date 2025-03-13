@@ -1,15 +1,17 @@
 from scms.instructor import Instructor
+from scms.portal import Portal
 from scms.student import Student
 from std_utility.io_function import print_line, clear_screen, input_int, exit_program
 
 
 class ManageAccountMenu:
-    def __init__(self, user:Student|Instructor):
+    def __init__(self, user:Student|Instructor, portal:Portal):
         self.user = user
+        self._portal = portal
 
     def start(self):
+        print_line()
         self.manage_account_menu("Manage Account Menu")
-        pass
 
     def manage_account_menu(self, prompt:str):
         clear_screen()
@@ -36,10 +38,20 @@ class ManageAccountMenu:
                 self.manage_account_menu("Invalid selection: available options are (1 - 4 & 0) Try again")
 
     def change_user_fullname(self):
+        # verify user password
+        # change the record in the list
+        # change the record in the file
+        # change the record in the object
         pass
 
     def change_email(self):
+
         pass
 
     def change_password(self):
+        # ask for current password
+        updated_user = self.user
+        # enter your current password
+        # enter new password
+        self._portal.update_User(updated_user)
         pass
