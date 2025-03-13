@@ -1,8 +1,8 @@
-from scms.cryptography import Cryptography
+from src.scms.cryptography import Cryptography
 from src.scms.course import Course
 from src.scms.enrollment import Enrollment
-from scms.student import Student
-from scms.instructor import Instructor
+from src.scms.student import Student
+from src.scms.instructor import Instructor
 from src.scms.data_restore import DataRestore
 from src.scms.data_backup import DataBackup
 
@@ -34,6 +34,14 @@ class Portal:
         self.enrollments: list[Enrollment] = self.restored_data[1]
         self.students:[Student] = self.restored_data[2]
         self.instructors:[Instructor] = self.restored_data[3]
+
+        print(f"""
+Data Restore Complete:
+- {len(self.courses)} courses
+- {len(self.enrollments)} enrollments
+- {len(self.students)} students
+- {len(self.instructors)} instructors
+""")
 
 
     def register_instructor(self, full_name, email, password) -> None:

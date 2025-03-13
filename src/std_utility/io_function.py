@@ -1,5 +1,5 @@
 import sys
-from scms.validator import Validator
+from src.scms.validator import Validator
 
 def exit_program():
     print("Thank you for using SCMS. Goodbye friend!")

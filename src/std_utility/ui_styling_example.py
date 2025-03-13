@@ -1,5 +1,4 @@
 from ui_styling import StringFormatting
-from io_function import *
 sample_text = "It's a Gym, not a Spa\n"
 
 print(StringFormatting(sample_text)
