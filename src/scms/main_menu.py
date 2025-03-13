@@ -1,9 +1,9 @@
-from scms.instructor_menu import InstructorMenu
-from scms.student_menu import StudentMenu
-from scms.student import Student
-from scms.instructor import Instructor
-from scms.portal import Portal
-from std_utility.io_function import *
+from src.scms.instructor_menu import InstructorMenu
+from src.scms.student_menu import StudentMenu
+from src.scms.student import Student
+from src.scms.instructor import Instructor
+from src.scms.portal import Portal
+from src.std_utility.io_function import *
 
 APP_NAME = "SCMS"
 
@@ -74,68 +74,15 @@ class MainMenu:
 
         self._current_user = self._portal.login(email, password)
 
-        print(type(self._current_user))
+        # print(type(self._current_user))
         if self._current_user is None:
             return self.main_menu(error_message("Login Failed: Incorrect email or password."))
         elif type(self._current_user) is Student:
-            return self.student_dashboard(success_message(f"Student Login Successful! Welcome back, {self._current_user.full_name}!"))
+            StudentMenu(self._current_user, self._portal).tart()
         else:
-            return self.instructor_dashboard(success_message(f"Instructor Login Successful! Welcome back, {self._current_user.full_name}!"))
+            InstructorMenu(self._current_user, self._portal).start()
+        self.logout()
 
-    def student_dashboard(self, prompt:str) -> None:
-        clear_screen()
-        print_line()
-        print("Welcome to Student Dashboard".center(150))
-        print_line()
-
-        student_menu:StudentMenu = StudentMenu(self._current_user, self._portal)
-        menu_prompt = """
-        Choose one of the options:
-        1.Enroll in a course
-        2.View my courses
-        3.View my grades
-        4.View my instructor
-        5.Manage your account
-        6.Logout
-        0.Exit
-    
-        """ + prompt + "\n>>>"
-        choice = input_int(menu_prompt)
-        match choice:
-            case 1: student_menu.enroll_in_course()
-            case 2: student_menu.view_my_courses()
-            case 3: student_menu.view_my_grades()
-            case 4: student_menu.view_my_instructor()
-            case 5: student_menu.manage_account()
-            case 6: self.logout()
-            case 0: exit_program()
-            case _: self.student_dashboard(error_message("Invalid selection: available options are (1 - 6 & 0) Try again"))
-        self.student_dashboard(prompt)
-
-    def instructor_dashboard(self, prompt) -> None:
-        clear_screen()
-        print_line()
-        print("Welcome to Instructor Dashboard".center(150))
-        print_line()
-
-        instructor_menu:InstructorMenu = InstructorMenu(self._current_user, self._portal)
-        menu_prompt = """
-        Choose one of the options:
-        1. Create a new course
-        2. Assign grades
-        3. View students enrolled in a course
-        4. Logout
-        0. Exit
-    
-        """ + prompt + "\n>>>"
-        choice = input_int(menu_prompt)
-        match choice:
-            case 1: instructor_menu.create_new_course()
-            case 2: instructor_menu.assign_grades()
-            case 3: instructor_menu.view_students_enrolled_in_course()
-            case 4: self.logout()
-            case 0: exit_program()
-            case _: self.instructor_dashboard(error_message("Invalid selection: available options are (1 - 4 & 0) Try again"))
 
     def logout(self) -> None:
         self._current_user = None
