@@ -1,8 +1,8 @@
-from scms.cryptography import Cryptography
+from src.scms.cryptography import Cryptography
 from src.scms.course import Course
 from src.scms.enrollment import Enrollment
-from scms.student import Student
-from scms.instructor import Instructor
+from src.scms.student import Student
+from src.scms.instructor import Instructor
 from src.scms.data_restore import DataRestore
 from src.scms.data_backup import DataBackup
 
