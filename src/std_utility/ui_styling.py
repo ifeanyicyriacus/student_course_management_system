@@ -75,6 +75,10 @@ class StringFormatting:
         self._texts[self._index] = "\033[47m" + self._texts[self._index] + "\033[0m"
         return self
 
+    def br(self):
+        self._texts[self._index] = self._texts[self._index] + "\n"
+        return self
+
     def print(self):
         print(self.__str__())
 

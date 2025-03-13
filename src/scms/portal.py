@@ -87,4 +87,12 @@ Data Restore Complete:
         return f"STU{len(self.instructors) + 100000}"
 
     def generate_course_id(self) -> str:
-        return f"COU{len(self.courses) + 100000}"
+        return f"COU{len(self.courses) + 1000}"
+
+#     student and instructor function start here
+
+#     student function start here
+
+#     instructor function start here
+
+
