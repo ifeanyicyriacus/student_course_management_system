@@ -3,7 +3,9 @@ from src.scms.course import Course
 from src.scms.portal import Portal
 from src.scms.student import Student
 from src.std_utility.ui_styling import StringFormatting
-from src.std_utility.io_function import Validator, input_str, clear_screen, error_message, input_int, exit_program, print_line
+from src.std_utility.io_function import Validator, input_str, clear_screen, error_message, input_int, exit_program, \
+    print_line, input_course_id
+from std_utility.io_function import info_message, success_message
 
 
 class StudentMenu:
@@ -45,25 +47,26 @@ class StudentMenu:
                 self.student_menu(error_message("Invalid selection: available options are (1 - 6 & 0) Try again"))
 
     def enroll_in_course(self):
-        # fetch all course
-        # courses = self.portal.get_all_courses
-        # display_courses(courses)//course id and name
-        # course_id:str = input_str(f"{display_courses}\nEnter a course ID from above: \n>>> ")
-        # if Validator.validate_course_id_format(course_id):
-        #     for course in self._portal.courses:
-        #         if course.course_id.lower() == course_id.lower():
-        #             self._portal.add_enrollment(course_id, student_id)
-        #
-        #
-        #
-        # course_id, Course_name
-        #            Course_description
-        # eg. 1. Maths
-        # eg. 2. English
-        # switch choice
-        # case 1: enroll(cos000001, stu000002)
-        #
-        pass
+        print("Enroll in a course")
+        if len(self._portal.courses) == 0:
+            self.student_menu(info_message("No course available. Please try again later."))
+        else:
+            StringFormatting(f"{"Course-ID":>10} | {"Course Name":<15}").bold().underline().print()
+            for course in self._portal.courses:
+                print(f"{course.course_id:>10} | {course.course_name:<15}")
+
+            course_id = input_course_id()
+            valid_course_id:str = ""
+            try:
+                for course in self._portal.courses:
+                    if course_id.upper() == course.course_id.upper():
+                        valid_course_id = course.course_id.upper()
+                        break
+                self._portal.add_enrollment(valid_course_id, self._student.student_id)
+                self.student_menu(info_message("Enrollment successful!"))
+            except ValueError:
+                self.student_menu(error_message("CourseID not associated with any existing course."))
+
 
     def view_my_courses(self):
         # fetch all courses
