@@ -27,3 +27,24 @@ class Validator:
             r"(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[.:;/\\`~\[\]{}()<>=+\-_ #!$@%*?^&])[A-Za-z\d.:;/\\`~\[\]{}()<>=+\-_ #!$@%*?^&]{8,16}$)"
         )
         return bool(password_pattern.match(password))
+
+    @classmethod
+    def validate_course_id(cls, value:str) -> bool:
+        if value[0:3].upper() != "COU": return False
+        if not value[3:].isdigit(): return False
+        if not int(value[3:]) >= 1000: return False
+        return True
+
+    @classmethod
+    def validate_student_id(cls, value:str):
+        if value[0:3].upper() != "STU": return False
+        if not value[3:].isdigit(): return False
+        if not int(value[3:]) >= 100000: return False
+        return True
+
+    @classmethod
+    def validate_instructor_id(cls, value:str):
+        if value[0:3].upper() != "INS": return False
+        if not value[3:].isdigit(): return False
+        if not int(value[3:]) >= 100000: return False
+        return True

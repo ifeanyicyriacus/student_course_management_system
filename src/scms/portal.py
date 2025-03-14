@@ -5,6 +5,7 @@ from src.scms.student import Student
 from src.scms.instructor import Instructor
 from src.scms.data_restore import DataRestore
 from src.scms.data_backup import DataBackup
+from std_utility.io_function import error_message
 
 
 class Portal:
@@ -52,7 +53,7 @@ Data Restore Complete:
         new_buddy:Student = Student(self._generate_student_id(), full_name, email, password)
         self._add_user(new_buddy)
 
-    def _check_duplicate_email(self, email:str) -> bool:
+    def check_duplicate_email(self, email:str) -> bool:
         for student in self.students:
             if student.email.lower() == email.lower():
                 return True
@@ -87,6 +88,35 @@ Data Restore Complete:
 
     def _generate_course_id(self) -> str:
         return f"COU{len(self.courses) + 1000}"
+
+    def _course_exist(self, course_name:str) -> bool:
+        for course in self.courses:
+            if course.course_name == course_name:
+                return True
+        return False
+
+
+    def add_course(self, course_name: str, course_description: str, instructor_id: str):
+        new_course = Course(self._generate_course_id(), course_name, course_description, instructor_id)
+        if self._course_exist(course_name):
+            print(error_message(f"Course {new_course.course_name} already exists."))
+        else:
+            self.courses.append(new_course)
+            self.backup_course(new_course)
+
+    def add_enrollment(self, course_id:str, student_id:str):
+        new_enrollment = Enrollment(course_id, student_id)
+        if self._enrollment_exist(new_enrollment):
+            print(error_message(f"Enrollment already exists."))
+        else:
+            self.enrollments.append(new_enrollment)
+            self.backup_enrollment(new_enrollment)
+
+    def _enrollment_exist(self, new_enrollment:Enrollment) -> bool:
+        for enrollment in self.enrollments:
+            if enrollment.course_id == new_enrollment.course_id and enrollment.student_id == new_enrollment.student_id:
+                return True
+        return False
 
 #     student and instructor function start here
 

@@ -1,7 +1,8 @@
 from scms.manage_account_menu import ManageAccountMenu
 from src.scms.instructor import Instructor
 from src.scms.portal import Portal
-from std_utility.io_function import input_int, error_message, clear_screen, print_line, exit_program
+from std_utility.io_function import input_int, error_message, clear_screen, print_line, exit_program, input_str, \
+    success_message
 
 
 class InstructorMenu:
@@ -32,7 +33,7 @@ class InstructorMenu:
         match choice:
             case 1: self.create_new_course()
             case 2: self.assign_grades()
-            case 3: self.view_students_enrolled_in_course()
+            case 3: self.view_students_enrolled_in_my_course()
             case 4: ManageAccountMenu(self._instructor, self._portal).start()
             case 5: pass
             case 0: exit_program()
@@ -40,14 +41,15 @@ class InstructorMenu:
                 self.instructor_menu(error_message("Invalid selection: available options are (1 - 5 & 0) Try again"))
 
     def create_new_course(self):
-        # prompt collect course name
-        # prompt collect course description
-        # prompt collect instructor_id
-        # if Validator.validate_instructor_id_format(instructor_id):
-        #     try:
-                # call portal.add_course(name, description, instructor_id)
-            # expect
-        pass
+        course_name:str = input_str("Enter course name: ")
+        course_description:str = input_str("Enter course description: ")
+        instructor_id:str = self._instructor.instructor_id
+        try:
+            self._portal.add_course(course_name, course_description, instructor_id)
+            self.instructor_menu(success_message(f"You have successfully created {course_name}!"))
+        except ValueError as e:
+            print(error_message("Course not added. Please try again."))
+            self.create_new_course()
 
     def assign_grades(self):
 
