@@ -11,7 +11,7 @@ class InstructorMenu:
         self._portal = portal
 
     def start(self):
-        self.instructor_menu(f"Student Login Successful! Welcome back, {self._instructor.full_name}!")
+        self.instructor_menu(f"Instructor Login Successful! Welcome back, {self._instructor.full_name}!")
 
     def instructor_menu(self, prompt:str) -> None:
         clear_screen()
@@ -61,6 +61,6 @@ class InstructorMenu:
         pass
 
     def manage_account(self):
-
-        pass
+        ManageAccountMenu(self._instructor, self._portal).start()
+        self.instructor_menu("Welcome back to your menu!")
 

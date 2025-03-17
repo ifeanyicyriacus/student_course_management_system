@@ -5,7 +5,7 @@ from src.scms.student import Student
 from src.scms.instructor import Instructor
 from src.scms.data_restore import DataRestore
 from src.scms.data_backup import DataBackup
-from std_utility.io_function import error_message
+from src.std_utility.io_function import error_message
 
 
 class Portal:
@@ -118,10 +118,55 @@ Data Restore Complete:
                 return True
         return False
 
-#     student and instructor function start here
+    def get_courses_by(self, student_id:str) -> list[Course]:
+        result:[Course] = []
+        for enrollment in self.enrollments:
+            if enrollment.student_id == student_id:
+                for course in self.courses:
+                    if course.course_id == enrollment.course_id:
+                        result.append(course)
+        return result
 
-#     student function start here
+    def get_courses_and_grades_by(self, student_id:str) -> list:
+        result:list = []
+        for enrollment in self.enrollments:
+            if enrollment.student_id == student_id:
+                for course in self.courses:
+                    if course.course_id == enrollment.course_id:
+                        result.append({"course_name":course.course_name, "grade":enrollment.grade})
+        return result
 
-#     instructor function start here
+    def get_courses_and_instructors_by(self, student_id):
+        my_courses_ids:[str] = self._get_my_courses_ids_by(student_id)
+        my_courses:[Course] = self._get_my_courses_by(my_courses_ids)
+        my_instructor_ids:[str] = _get_my_instructors_ids_by(my_courses)
+        my_instructors:[Instructor] = self._get_my_instructors_by(my_instructor_ids)
+        return my_courses, my_instructors
 
 
+    def _get_my_courses_ids_by(self, student_id:str) -> [str]:
+        result:[str] = []
+        for enrollment in self.enrollments:
+            if enrollment.student_id == student_id:
+                result.append(enrollment.course_id)
+        return result
+
+    def _get_my_courses_by(self, courses_ids:[str]) -> [Course]:
+        result:[Course] = []
+        for course in self.courses:
+            if course.course_id in courses_ids:
+                result.append(course)
+        return result
+
+    def _get_my_instructors_by(self, instructor_ids:[str]) -> [Instructor] :
+        result:[Instructor] = []
+        for instructor in self.instructors:
+            if instructor.instructor_id in instructor_ids:
+                result.append(instructor)
+        return result
+
+def _get_my_instructors_ids_by(courses:[Course]) -> [str]:
+    result:[str] = []
+    for course in courses:
+        result.append(course.instructor_id)
+    return result
