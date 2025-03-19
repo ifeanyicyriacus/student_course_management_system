@@ -1,0 +1,3 @@
+STU100000,Ifeanyi Cyriacus,ifeanyi@gmail.com,$2b$12$8yfj8P1GSkBFUuCiuxCVeeqjYDOvq0czDCtFZMi6Yv/e6DVst6O5q
+STU100000,Onyinyechi Ekezie,onyi@gmail.com,$2b$12$85pop8YQbt14cwee5HL0a.FeRYBHW8tiDM/N/kYw/RztZjc7Vs50K
+STU100000,Kehinde Adebayo,kenny@gmail.com,$2b$12$7uVDIsXFbY2x3Sx2bTUvKe963dQezXDqJziAP/jeGDm0w/dYEDliu

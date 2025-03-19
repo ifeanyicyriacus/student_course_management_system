@@ -1,0 +1,4 @@
+INS100000,Chibuzo Iam,chibuzo@gmail.com,$2b$12$3f8GFuviGtvdcFfHFkfTlOKlTkJwtNpok9nz32jkpqvGr3J5b3GHy
+INS100001,Chinedu Ugbo,chinedu@gmail.com,$2b$12$nLWw2e6GYy6mkyabZAWfAOwXKpONtIgjd9y6J0ksx8oZXpfes49yu
+INS100002,Mr SK,sk@gmail.com,$2b$12$k8OeEf6gyVZEJOQlHC6dquJP6ly2Ld6knbIioIZu.AXBrfeeHffGG
+INS100003,Mr Femi,femi@gmail.com,$2b$12$wyMLZovFIc/drvETJ83MBOpLSOZ0nrJRMXqA51NnTq3GcNDgh5Kyi

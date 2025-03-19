@@ -56,11 +56,13 @@ class InstructorMenu:
 
     def assign_grades(self):
         my_courses:[Course] = self._portal.get_instructors_course_by(self._instructor.instructor_id)
+        if len(my_courses) == 0:
+            self.instructor_menu(info_message("You have not created any course."))
 
         clear_screen()
         count = 1
         StringFormatting(f"{"s/n":>3} | {"Course-ID":>10} | {"Course Name":<15}").bold().underline().print()
-        for course in self._portal.courses:
+        for course in my_courses:
             print(f"{count:>3} | {course.course_id:>10} | {course.course_name:<15}")
             count += 1
         course_id = input_course_id()
@@ -79,6 +81,8 @@ class InstructorMenu:
             self.instructor_menu(error_message("CourseID not associated with any existing course."))
 
         my_students:[Student] = self._portal.get_student_enrolled_in(course_id=course_id)
+        if len(my_students) == 0:
+            self.instructor_menu(info_message(f"You don't have any student enrolled in {course_name}."))
 
         StringFormatting(f"Student offering {course_name} are: ").underline().bold().print()
         StringFormatting(f"{"s/n":>3} | {"Student-ID":>10} | {"Student Name":>15}").underline().bold().print()
@@ -111,11 +115,12 @@ class InstructorMenu:
 
     def view_students_enrolled_in_my_course(self):
         my_courses: [Course] = self._portal.get_instructors_course_by(self._instructor.instructor_id)
-
+        if len(my_courses) == 0:
+            self.instructor_menu(info_message("You have not created any course."))
         clear_screen()
         count = 1
         StringFormatting(f"{"s/n":>3} | {"Course-ID":>10} | {"Course Name":<15}").bold().underline().print()
-        for course in self._portal.courses:
+        for course in my_courses:
             print(f"{count:>3} | {course.course_id:>10} | {course.course_name:<15}")
             count += 1
         course_id = input_course_id()
@@ -134,6 +139,8 @@ class InstructorMenu:
             self.instructor_menu(error_message("CourseID not associated with any existing course."))
 
         my_students: [Student] = self._portal.get_student_enrolled_in(course_id=course_id)
+        if len(my_courses) == 0:
+            self.instructor_menu(info_message(f"You don't have any student enrolled in {course_name}."))
 
         StringFormatting(f"Student offering {course_name} are: ").underline().bold().print()
         StringFormatting(f"{"s/n":>3} | {"Student-ID":>10} | {"Student Name":>15}").underline().bold().print()

@@ -118,6 +118,8 @@ class StudentMenu:
         my_instructors: [Instructor]
         my_courses, my_instructors = self._portal.get_courses_and_instructors_by(self._student.student_id)
 
+        if len(my_courses) == 0:
+            self.student_menu(info_message("You are not enrolled in any courses."))
         counter = 1
         for my_instructor in my_instructors:
             StringFormatting(f"\n{counter:>2}. {my_instructor.full_name:<15}").underline().bold().print()
@@ -125,20 +127,12 @@ class StudentMenu:
             for course in my_courses:
                 if course.instructor_id == my_instructor.instructor_id:
                     StringFormatting(f"   o {course.course_name:<15}").italic().print()
+
         input("press enter to continue...")
         self.student_menu("Welcome back to your menu!")
 
     def manage_account(self):
         ManageAccountMenu(self._student, self._portal).start()
         self.student_menu("Welcome back to your menu!")
-
-# def display_courses(courses: [Course]) -> str:
-#     text = StringFormatting("Courses:\n").underline().bold().green()
-#     text += StringFormatting(f'{"ID":>10} - {"NAME":>20}\n').bold()
-#     for course in courses:
-#         text += f"{course.course_id} - {course.course_name}\n"
-#     return text
-
-
 
 
