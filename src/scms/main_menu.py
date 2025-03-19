@@ -77,7 +77,6 @@ class MainMenu:
         if self._current_user is None:
             return self.main_menu(error_message("Login Failed: Incorrect email or password."))
         elif type(self._current_user) is Student:
-            print(type(self._current_user))
             StudentMenu(self._current_user, self._portal).start()
         else:
             InstructorMenu(self._current_user, self._portal).start()

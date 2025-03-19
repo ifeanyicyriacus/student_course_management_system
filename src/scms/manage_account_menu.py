@@ -67,7 +67,6 @@ class ManageAccountMenu:
 
     def change_password(self):
         if confirm_change(f"Are you sure you want to change your Password yes/no?"):
-
             current_password = input_password("Enter your current password: ")
             if self.user.verify_password(current_password):
                 new_password = input("Enter new password: ")
