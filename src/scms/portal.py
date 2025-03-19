@@ -179,9 +179,35 @@ Data Restore Complete:
     def override_instructor_file(self) -> None:
         self.override_instructor(self.instructors)
 
+    def _get_student_ids_enrollments_by(self, course_id:str) -> list[str]:
+        result:[str] = []
+        for enrollment in self.enrollments:
+            if enrollment.course_id == course_id:
+                result.append(enrollment.student_id)
+        return result
+
+    def get_student_enrolled_in(self, course_id) -> [Student]:
+        student_ids:[str] = self._get_student_ids_enrollments_by(course_id)
+        my_students:[Student] = []
+        for student in self.students:
+            if student.student_id in student_ids:
+                my_students.append(student)
+        return my_students
+
+    def score_student(self, student_id, course_id, score):
+        enrollment_is_found = False
+        for enrollment in self.enrollments:
+            if enrollment.student_id == student_id and enrollment.course_id == course_id:
+                enrollment.score = score
+                enrollment_is_found = True
+        if not enrollment_is_found:
+            raise Exception(f"Enrollment not found.")
+
+
 def _get_my_instructors_ids_by(courses:[Course]) -> [str]:
     # result:[str] = []
     # for course in courses:
     #     result.append(course.instructor_id)
     # return result
     return [course.instructor_id for course in courses]
+

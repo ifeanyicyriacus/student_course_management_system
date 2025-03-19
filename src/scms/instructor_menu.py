@@ -1,9 +1,11 @@
+from src.scms.student import Student
 from src.scms.course import Course
 from src.scms.manage_account_menu import ManageAccountMenu
 from src.scms.instructor import Instructor
 from src.scms.portal import Portal
 from std_utility.io_function import input_int, error_message, clear_screen, print_line, exit_program, input_str, \
-    success_message
+    success_message, input_course_id, input_student_id, info_message, input_score
+from std_utility.ui_styling import StringFormatting
 
 
 class InstructorMenu:
@@ -54,26 +56,93 @@ class InstructorMenu:
 
     def assign_grades(self):
         my_courses:[Course] = self._portal.get_instructors_course_by(self._instructor.instructor_id)
-        # first display the instructor his courses if you have any on a list use format
-        # My course
-        # course_id | course name | no of student enrolled
-        # ...  ...    ... .......     ........ ...... .....
 
-        # enter course_id to grade
-        #     this will lead to list of student enrolled in this format:
-        #       see view_my_grade in student menu
-        #       select a student_id to grade
-    #           clear-screen
-    #           display updated version of course scoresheet
-    # while showing enter (0 to go back)
+        clear_screen()
+        count = 1
+        StringFormatting(f"{"s/n":>3} | {"Course-ID":>10} | {"Course Name":<15}").bold().underline().print()
+        for course in self._portal.courses:
+            print(f"{count:>3} | {course.course_id:>10} | {course.course_name:<15}")
+            count += 1
+        course_id = input_course_id()
+        clear_screen()
+        valid_course_id: str = ""
+        course_name:str = ""
+        try:
+            for course in my_courses:
+                if course_id.upper() == course.course_id.upper():
+                    valid_course_id = course.course_id.upper()
+                    course_name = course.course_name
+                    break
+            if valid_course_id == "":
+                raise ValueError
+        except ValueError:
+            self.instructor_menu(error_message("CourseID not associated with any existing course."))
 
+        my_students:[Student] = self._portal.get_student_enrolled_in(course_id=course_id)
 
+        StringFormatting(f"Student offering {course_name} are: ").underline().bold().print()
+        StringFormatting(f"{"s/n":>3} | {"Student-ID":>10} | {"Student Name":>15}").underline().bold().print()
+        count = 1
+        for student in my_students:
+            StringFormatting(f"{count:>3} | {student.student_id:>10} | {student.full_name}").underline().print()
+            count += 1
+
+        student_id = input_student_id()
+        clear_screen()
+        valid_student_id: str = ""
+        student_full_name:str = ""
+        try:
+            for student in my_students:
+                if student_id.upper() == student.student_id.upper():
+                    valid_student_id = student.student_id.upper()
+                    student_full_name = student.full_name
+                    break
+            if valid_student_id == "":
+                raise ValueError
+        except ValueError:
+            self.instructor_menu(error_message("StudentID not associated with any existing student."))
+
+        student_grade = input_score(f"Enter score for Student {student_full_name} ({valid_student_id})")
+        try:
+            self._portal.score_student(student_id=student_id, course_id=course_id, score=student_grade)
+            self.instructor_menu(success_message(f"You have successfully scored {student_full_name}!"))
+        except ValueError as e:
+            self.instructor_menu(error_message(f"Unable to score, {str(e)}. Please try again."))
 
     def view_students_enrolled_in_my_course(self):
-        # ask instructor for
+        my_courses: [Course] = self._portal.get_instructors_course_by(self._instructor.instructor_id)
 
+        clear_screen()
+        count = 1
+        StringFormatting(f"{"s/n":>3} | {"Course-ID":>10} | {"Course Name":<15}").bold().underline().print()
+        for course in self._portal.courses:
+            print(f"{count:>3} | {course.course_id:>10} | {course.course_name:<15}")
+            count += 1
+        course_id = input_course_id()
+        clear_screen()
+        valid_course_id: str = ""
+        course_name: str = ""
+        try:
+            for course in my_courses:
+                if course_id.upper() == course.course_id.upper():
+                    valid_course_id = course.course_id.upper()
+                    course_name = course.course_name
+                    break
+            if valid_course_id == "":
+                raise ValueError
+        except ValueError:
+            self.instructor_menu(error_message("CourseID not associated with any existing course."))
 
-        pass
+        my_students: [Student] = self._portal.get_student_enrolled_in(course_id=course_id)
+
+        StringFormatting(f"Student offering {course_name} are: ").underline().bold().print()
+        StringFormatting(f"{"s/n":>3} | {"Student-ID":>10} | {"Student Name":>15}").underline().bold().print()
+        count = 1
+        for student in my_students:
+            StringFormatting(f"{count:>3} | {student.student_id:>10} | {student.full_name}").underline().print()
+            count += 1
+        input("press enter to continue...")
+        self.instructor_menu("Welcome back to your menu!")
 
     def manage_account(self):
         ManageAccountMenu(self._instructor, self._portal).start()

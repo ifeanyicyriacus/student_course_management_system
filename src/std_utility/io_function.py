@@ -33,6 +33,14 @@ def input_int(prompt: str) -> int:
         print(error_message("Invalid input. Enter an integer and Try again."))
         return input_int(prompt)
 
+def input_score(prompt: str) -> int:
+    score = input_int(prompt)
+    if score < 0 or score > 100:
+        print(error_message("Invalid score. Enter an integer between 0 and 100. Try again."))
+        input_score(prompt)
+    else:
+        return score
+
 def input_password(prompt="Enter your password: "):
     value = input(prompt).strip()
     if Validator.validate_password(value):
