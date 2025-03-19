@@ -1,7 +1,17 @@
-from scms.instructor import Instructor
-from scms.portal import Portal
-from scms.student import Student
-from std_utility.io_function import print_line, clear_screen, input_int, exit_program
+from src.scms.instructor import Instructor
+from src.scms.portal import Portal
+from src.scms.student import Student
+from std_utility.io_function import print_line, clear_screen, input_int, exit_program, input_str, error_message, \
+    input_email, info_message, success_message, input_password
+
+
+def confirm_change(prompt:str) -> bool:
+    response = input_str(prompt)
+    if response.lower() == 'yes': return True
+    elif response.lower() == 'no': return False
+    else:
+        print(error_message("Invalid input. Please try again. only 'yes' or 'no' are supported"))
+        return confirm_change(prompt)
 
 
 class ManageAccountMenu:
@@ -37,21 +47,45 @@ class ManageAccountMenu:
             case _:
                 self.manage_account_menu("Invalid selection: available options are (1 - 4 & 0) Try again")
 
-    def change_user_fullname(self):
-        # verify user password
-        # change the record in the list
-        # change the record in the file
-        # change the record in the object
-        pass
+    def change_user_fullname(self) -> None:
+        if confirm_change(f"Are you sure you want to change your Fullname from '{self.user.full_name}' yes/no?"):
+            new_full_name = input("Enter a new fullname: ")
+            self.user.full_name = new_full_name
+            self.override_user_file()
+            self.manage_account_menu(success_message("Fullname successfully changed to '{}'".format(self.user.full_name)))
+        else:
+            self.manage_account_menu(info_message("Fullname was not changed."))
 
-    def change_email(self):
-
-        pass
+    def change_email(self) -> None:
+        if confirm_change(f"Are you sure you want to change your Email from '{self.user.email}' yes/no?"):
+            new_email = input_email()
+            self.user.email = new_email
+            self.override_user_file()
+            self.manage_account_menu(success_message("Email successfully changed to '{}'".format(self.user.email)))
+        else:
+            self.manage_account_menu(info_message("Email was not changed."))
 
     def change_password(self):
-        # ask for current password
-        updated_user = self.user
-        # enter your current password
-        # enter new password
-        self._portal.update_User(updated_user)
-        pass
+        if confirm_change(f"Are you sure you want to change your Password yes/no?"):
+
+            current_password = input_password("Enter your current password: ")
+            if self.user.verify_password(current_password):
+                new_password = input("Enter new password: ")
+                self.user.update_password(password=current_password, new_password=new_password)
+                self.override_user_file()
+            else:
+                self.manage_account_menu(error_message("Wrong password, please try again."))
+        else:
+            self.manage_account_menu(info_message("Password was not changed."))
+
+    def override_user_file(self):
+        print(type(self.user))
+        print(type(self.user) is Student)
+        print(type(self.user) is Instructor)
+
+        if type(self.user) is Student:
+            print(type(self.user))
+            self._portal.override_student_file()
+        elif type(self.user) is Instructor:
+            print(type(self.user))
+            self._portal.override_instructor_file()

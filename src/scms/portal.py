@@ -30,6 +30,9 @@ class Portal:
         self.backup_enrollment = data_backup.add_to_enrollments
         self.backup_student = data_backup.add_to_students
         self.backup_instructor = data_backup.add_to_instructors
+        self.override_student = data_backup.override_student_file
+        self.override_instructor = data_backup.override_instructor_file
+
 
         self.courses: list[Course] = self.restored_data[0]
         self.enrollments: list[Enrollment] = self.restored_data[1]
@@ -143,30 +146,42 @@ Data Restore Complete:
         my_instructors:[Instructor] = self._get_my_instructors_by(my_instructor_ids)
         return my_courses, my_instructors
 
-
     def _get_my_courses_ids_by(self, student_id:str) -> [str]:
-        result:[str] = []
-        for enrollment in self.enrollments:
-            if enrollment.student_id == student_id:
-                result.append(enrollment.course_id)
-        return result
+        # result:[str] = []
+        # for enrollment in self.enrollments:
+        #     if enrollment.student_id == student_id:
+        #         result.append(enrollment.course_id)
+        # return result
+        return [enrollment.course_id for enrollment in self.enrollments if enrollment.student_id == student_id]
 
     def _get_my_courses_by(self, courses_ids:[str]) -> [Course]:
-        result:[Course] = []
-        for course in self.courses:
-            if course.course_id in courses_ids:
-                result.append(course)
-        return result
+        # result:[Course] = []
+        # for course in self.courses:
+        #     if course.course_id in courses_ids:
+        #         result.append(course)
+        # return result
+        return [course for course in self.courses if course.course_id in courses_ids]
 
     def _get_my_instructors_by(self, instructor_ids:[str]) -> [Instructor] :
-        result:[Instructor] = []
-        for instructor in self.instructors:
-            if instructor.instructor_id in instructor_ids:
-                result.append(instructor)
-        return result
+        # result:[Instructor] = []
+        # for instructor in self.instructors:
+        #     if instructor.instructor_id in instructor_ids:
+        #         result.append(instructor)
+        # return result
+        return [instructor for instructor in self.instructors if instructor.instructor_id in instructor_ids]
+
+    def get_instructors_course_by(self, instructor_id:str) -> [Course]:
+        return [course for course in self.courses if course.instructor_id == instructor_id]
+
+    def override_student_file(self) -> None:
+        self.override_student(self.students)
+
+    def override_instructor_file(self) -> None:
+        self.override_instructor(self.instructors)
 
 def _get_my_instructors_ids_by(courses:[Course]) -> [str]:
-    result:[str] = []
-    for course in courses:
-        result.append(course.instructor_id)
-    return result
+    # result:[str] = []
+    # for course in courses:
+    #     result.append(course.instructor_id)
+    # return result
+    return [course.instructor_id for course in courses]

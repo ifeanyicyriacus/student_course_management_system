@@ -15,7 +15,7 @@ class User(abc.ABC):
 
     @full_name.setter
     def full_name(self, full_name: str):
-        if Validator.validate_input(full_name):
+        if Validator.validate_input(full_name) or not Validator.contains_separator(full_name):
             self.__full_name = full_name
         else: raise ValueError("Invalid full name")
 

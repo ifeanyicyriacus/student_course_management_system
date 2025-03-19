@@ -24,3 +24,7 @@ class FileHandler:
                 file.write('')
             return self.read()
 
+    def clear(self) -> None:
+        print("Clear File ....")
+        with open(self.__file_path, 'w') as file:
+            file.truncate(0)

@@ -1,4 +1,5 @@
-from scms.manage_account_menu import ManageAccountMenu
+from src.scms.course import Course
+from src.scms.manage_account_menu import ManageAccountMenu
 from src.scms.instructor import Instructor
 from src.scms.portal import Portal
 from std_utility.io_function import input_int, error_message, clear_screen, print_line, exit_program, input_str, \
@@ -52,12 +53,26 @@ class InstructorMenu:
             self.create_new_course()
 
     def assign_grades(self):
+        my_courses:[Course] = self._portal.get_instructors_course_by(self._instructor.instructor_id)
+        # first display the instructor his courses if you have any on a list use format
+        # My course
+        # course_id | course name | no of student enrolled
+        # ...  ...    ... .......     ........ ...... .....
 
-        pass
+        # enter course_id to grade
+        #     this will lead to list of student enrolled in this format:
+        #       see view_my_grade in student menu
+        #       select a student_id to grade
+    #           clear-screen
+    #           display updated version of course scoresheet
+    # while showing enter (0 to go back)
+
 
 
     def view_students_enrolled_in_my_course(self):
         # ask instructor for
+
+
         pass
 
     def manage_account(self):

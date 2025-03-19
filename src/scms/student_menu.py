@@ -1,12 +1,12 @@
-from scms.instructor import Instructor
-from scms.manage_account_menu import ManageAccountMenu
+from src.scms.instructor import Instructor
+from src.scms.manage_account_menu import ManageAccountMenu
 from src.scms.course import Course
 from src.scms.portal import Portal
 from src.scms.student import Student
 from src.std_utility.ui_styling import StringFormatting
 from src.std_utility.io_function import Validator, input_str, clear_screen, error_message, input_int, exit_program, \
     print_line, input_course_id, score_to_grade
-from std_utility.io_function import info_message, success_message
+from src.std_utility.io_function import info_message, success_message
 
 
 class StudentMenu:
@@ -83,7 +83,7 @@ class StudentMenu:
                 print(f"{count:>3} | {course.course_id:>10} | {course.course_name:<15}")
                 count += 1
         print(info_message(f"You are enrolled to {len(courses)} courses."))
-        input_str("press enter to continue...")
+        input("press enter to continue...")
         self.student_menu("Welcome back to your menu!")
 
     def view_my_grades(self):
@@ -109,7 +109,7 @@ class StudentMenu:
                        .append(f"Fails: {fails}").red().br()
                        .append(f"Ungraded: {ungraded}").yellow().br().print())
 
-        input_str("press enter to continue...")
+        input("press enter to continue...")
         self.student_menu("Welcome back to your menu!")
 
 
@@ -125,7 +125,7 @@ class StudentMenu:
             for course in my_courses:
                 if course.instructor_id == my_instructor.instructor_id:
                     StringFormatting(f"   o {course.course_name:<15}").italic().print()
-        input_str("press enter to continue...")
+        input("press enter to continue...")
         self.student_menu("Welcome back to your menu!")
 
     def manage_account(self):

@@ -13,6 +13,10 @@ class Validator:
         return bool(input_str) and input_str.strip() != ""
 
     @staticmethod
+    def contains_separator(input_str: str) -> bool:
+        return len(input_str.split(",")) != 1
+
+    @staticmethod
     def validate_grade(grade:str|int) -> bool:
         if str(grade).isdigit():
             grade = int(grade)
